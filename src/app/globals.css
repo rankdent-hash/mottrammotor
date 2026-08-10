@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b1a2b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Brand: deep navy (trust, automotive) + amber (urgency / CTA) */
+  --color-navy-950: #050e1a;
+  --color-navy-900: #0a1b30;
+  --color-navy-800: #0f2647;
+  --color-navy-700: #163863;
+  --color-navy-600: #1f4c85;
+  --color-navy-500: #2c63a8;
+  --color-navy-100: #e7edf5;
+  --color-navy-50: #f4f7fb;
+
+  --color-teal-600: #0c8281;
+  --color-teal-500: #14a3a1;
+  --color-teal-100: #dcf3f2;
+
+  --color-amber-600: #c2660c;
+  --color-amber-500: #e6820f;
+  --color-amber-400: #f5991e;
+  --color-amber-100: #fdecd2;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.container-page {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
