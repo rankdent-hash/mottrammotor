@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #06282d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Brand: deep petrol teal (clinical, calm) for structure and text. */
+  --color-brand-950: #04191c;
+  --color-brand-900: #06282d;
+  --color-brand-800: #0a3a41;
+  --color-brand-700: #0f4f58;
+  --color-brand-600: #146872;
+  --color-brand-500: #1c8792;
+  --color-brand-400: #35a8b2;
+  --color-brand-200: #a9dde2;
+  --color-brand-100: #d7eff1;
+  --color-brand-50: #f1f9fa;
+
+  /* Accent: warm coral for calls to action. coral-600 is the lightest shade
+     that still clears 4.5:1 against white text — keep CTAs at 600 or darker
+     and darken (not lighten) on hover. */
+  --color-coral-700: #a53a32;
+  --color-coral-600: #c2453c;
+  --color-coral-500: #e0574c;
+  --color-coral-100: #fde8e5;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.container-page {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
