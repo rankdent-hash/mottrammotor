@@ -13,6 +13,7 @@ import Areas from "@/components/sections/Areas";
 import FinalCta from "@/components/sections/FinalCta";
 import Risk from "@/components/sections/Risk";
 import Urgent from "@/components/sections/Urgent";
+import Team from "@/components/sections/Team";
 import Placeholder from "@/components/Placeholder";
 import { JsonLd } from "@/lib/schema";
 import { isPlaceholder, type PageContent } from "@/lib/content/types";
@@ -59,6 +60,8 @@ export default function PageRenderer({ page }: { page: PageContent }) {
             return <Risk key={i} section={section} />;
           case "urgent":
             return <Urgent key={i} section={section} />;
+          case "team":
+            return <Team key={i} section={section} />;
         }
       })}
 

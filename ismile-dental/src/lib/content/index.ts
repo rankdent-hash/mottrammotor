@@ -9,8 +9,17 @@
 
 import type { PageContent } from "@/lib/content/types";
 import { home } from "@/lib/content/home";
+import { ourStory } from "@/lib/content/our-story";
+import { team } from "@/lib/content/team";
+import { contact } from "@/lib/content/contact";
 
-const pages: PageContent[] = [home];
+const pages: PageContent[] = [
+  // Core
+  home,
+  ourStory,
+  team,
+  contact,
+];
 
 export const registry = new Map(pages.map((page) => [page.slug, page]));
 

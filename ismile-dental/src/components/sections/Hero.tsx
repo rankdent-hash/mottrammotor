@@ -47,6 +47,7 @@ export default function Hero({
             options={section.formOptions}
             buttonLabel={section.buttonLabel}
             defaultOption={section.formOptions[0]}
+            extraFields={section.extraFields}
             source={source}
           />
         </div>

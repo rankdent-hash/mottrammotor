@@ -22,6 +22,8 @@ import { NextResponse } from "next/server";
 type EnquiryPayload = {
   name?: string;
   phone?: string;
+  email?: string;
+  message?: string;
   interest?: string;
   callTime?: string;
   consent?: string;
@@ -75,9 +77,12 @@ export async function POST(request: Request) {
           text: [
             `Name: ${body.name}`,
             `Phone: ${body.phone}`,
+            `Email: ${body.email ?? "not given"}`,
             `Enquiring about: ${body.interest ?? "not given"}`,
             `Best time to call: ${body.callTime ?? "not given"}`,
             `Page: ${body.source ?? "unknown"}`,
+            "",
+            `Message: ${body.message?.trim() || "none"}`,
           ].join("\n"),
         }),
       });

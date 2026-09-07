@@ -28,6 +28,7 @@ export default function EnquiryForm({
   defaultOption,
   source,
   compact = true,
+  extraFields = [],
 }: {
   heading: string;
   options: string[];
@@ -35,6 +36,7 @@ export default function EnquiryForm({
   defaultOption?: string;
   source: string;
   compact?: boolean;
+  extraFields?: ("email" | "message")[];
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -87,6 +89,9 @@ export default function EnquiryForm({
 
         <Field label="Your name" name="name" autoComplete="name" required />
         <Field label="Phone number" name="phone" type="tel" autoComplete="tel" required />
+        {extraFields.includes("email") && (
+          <Field label="Email address" name="email" type="email" autoComplete="email" />
+        )}
 
         <Select
           label="What can we help with?"
@@ -95,6 +100,26 @@ export default function EnquiryForm({
           options={options}
         />
         <Select label="Best time to call" name="callTime" options={CALL_TIMES} />
+
+        {extraFields.includes("message") && (
+          <div>
+            <label
+              htmlFor="enquiry-message"
+              className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-ink-600"
+            >
+              Your message
+            </label>
+            <textarea
+              id="enquiry-message"
+              name="message"
+              rows={4}
+              className="w-full rounded-md border border-ink-200 px-3.5 py-2.5 text-ink-900 outline-none focus:border-ink-500 focus:ring-2 focus:ring-ink-200"
+            />
+            <p className="mt-1.5 text-xs text-ink-600">
+              Optional — tell us what&apos;s bothering you, or ask anything you like.
+            </p>
+          </div>
+        )}
 
         <label className="flex items-start gap-3 text-sm text-ink-800">
           <input

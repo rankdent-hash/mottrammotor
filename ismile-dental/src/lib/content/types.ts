@@ -41,6 +41,12 @@ export type HeroSection = {
   formOptions: string[];
   /** Never "Submit". */
   buttonLabel: string;
+  /**
+   * Four fields maximum is the rule for a treatment page's hero. The Contact
+   * page is specified with six, so the extras are opt-in per page rather than
+   * something a page can drift into.
+   */
+  extraFields?: ("email" | "message")[];
   underForm: Prose;
 };
 
@@ -174,6 +180,32 @@ export type RiskSection = {
   blocks: ExplainerBlock[];
 };
 
+/**
+ * A team member card. Fields marked clinical-only in the brief are optional
+ * here and must be omitted entirely for reception and administrative staff —
+ * publishing a GDC number for someone who does not hold one is worse than
+ * publishing nothing.
+ */
+export type TeamMember = {
+  name: string | Placeholder;
+  role: string | Placeholder;
+  /** Clinical staff only. Rendered as "GDC Number: XXXXX". */
+  gdc?: string | Placeholder;
+  /** Always a placeholder until real practice photography exists. */
+  photo: Placeholder;
+  fields: { label: string; value: string | Placeholder }[];
+  bio: Prose[];
+  pullQuote?: Placeholder;
+  link?: Link;
+};
+
+export type TeamSection = {
+  type: "team";
+  h2: string;
+  intro?: Prose[];
+  members: TeamMember[];
+};
+
 /** Urgent/emergency block, placed high. Extractions page. */
 export type UrgentSection = {
   type: "urgent";
@@ -195,7 +227,8 @@ export type Section =
   | AreasSection
   | FinalCtaSection
   | RiskSection
-  | UrgentSection;
+  | UrgentSection
+  | TeamSection;
 
 // --- The page --------------------------------------------------------------
 
