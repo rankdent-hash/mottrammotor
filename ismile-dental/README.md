@@ -104,14 +104,35 @@ is a launch blocker.
 
 ## Build status
 
+**8 of 22 pages built.** Phase 1 is the four core pages plus the three hubs and
+Dental Implants, per `build-plan.md` §1 — they carry the navigation and the
+internal linking structure, so they come before the pages they parent.
+
 | | |
 |---|---|
-| Built | Home |
-| Next | About Us, Meet the Team, Contact, the three hubs, Dental Implants |
-| Then | The 13 remaining treatment pages, in `build-plan.md` §1 commercial order |
-| Then | Blog migration (4 posts, unchanged) |
-| Not started | The nine location pages — **their copy has not been written yet** (`build-plan.md` §4). `locationPagesBuilt` in `src/lib/locations.ts` renders them as plain text until they exist, rather than linking to 404s. |
-| Not written | Fees & Membership, Nervous Patients, New Patients, Complaints Procedure — recommended in `build-plan.md` §4. The complaints page is a GDC Standards requirement. |
+| Built | Home · About Us · Meet the Team · Contact · General Dentistry hub · Cosmetic Dentistry hub · Skin Clinic hub · Dental Implants |
+| Next | The 13 remaining treatment pages, in `build-plan.md` §1 commercial order: Invisalign → Veneers → Whitening → Composite Bonding → Crowns → Bridges → Dentures → Root Canal → Extractions → Check-Ups → Hygiene → White Fillings, plus Anti-Wrinkle Treatments and Dermal Fillers |
+| Then | Blog migration — `/blog/`, four posts unchanged, `/category/dental/` |
+| Not started | The nine location pages. **Their copy has not been written yet** (`build-plan.md` §4). `locationPagesBuilt` in `src/lib/locations.ts` renders them as plain text until they exist, rather than linking to 404s. |
+| Not written | Fees & Membership · Nervous Patients · New Patients · Complaints Procedure. All recommended in `build-plan.md` §4; the complaints page is a GDC Standards requirement and a launch blocker. |
+
+### Pages that must not go live as they stand
+
+- **`/team/`** — the copy pack's own instruction. A bio page with visible gaps
+  is worse than the thin page it replaces. Dr Azimi's block must be filled
+  first; the client checklist is at the foot of `copy/01-core-pages.md`.
+- **`/facial-rejuvenation/`** and its two children — blocked on the POM
+  advertising review in `compliance.md` §1, and on Dr Azimi's aesthetics
+  training and qualifications, which are the core trust asset on those pages.
+
+### Open launch blockers carried in the copy
+
+- Both treatment guarantees (five-year and ten-year) are omitted. They
+  contradict each other and neither has written terms.
+- The complaints procedure does not exist as a page.
+- The privacy notice does not exist as a page, and the enquiry form links to it.
+- The verified Google Business Profile is unconfirmed — two competing
+  `g.page` links are in circulation, splitting reviews.
 
 ## Development
 

@@ -14,6 +14,8 @@ import { team } from "@/lib/content/team";
 import { contact } from "@/lib/content/contact";
 import { generalDentistry } from "@/lib/content/general-dentistry";
 import { cosmeticDentistry } from "@/lib/content/cosmetic-dentistry";
+import { facialRejuvenation } from "@/lib/content/facial-rejuvenation";
+import { dentalImplants } from "@/lib/content/dental-implants";
 
 const pages: PageContent[] = [
   // Core
@@ -27,6 +29,10 @@ const pages: PageContent[] = [
 
   // Cosmetic Dentistry
   cosmeticDentistry,
+  dentalImplants,
+
+  // Skin Clinic
+  facialRejuvenation,
 ];
 
 export const registry = new Map(pages.map((page) => [page.slug, page]));
