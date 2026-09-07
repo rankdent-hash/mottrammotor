@@ -1,76 +1,122 @@
-# iSmile Dental Practice — Website
+# iSmile Dental Practice — website rebuild
 
-Marketing website for iSmile Dental Practice (NHS and private dental care),
-built with Next.js 16 (App Router), TypeScript and Tailwind CSS v4, and
-intended for deployment on Vercel.
+Next.js 16 (App Router) + Tailwind v4, built for Vercel. Replaces the 2021
+WordPress site at `ismiledentalpractice.co.uk`.
 
-## Status
+Built against the RankDent copy pack — `CLAUDE.md`, `research.md`,
+`content-brief.md`, `compliance.md`, `build-plan.md` and `copy/*`. **Read
+`compliance.md` before editing any copy.** Several of its rules are legal,
+not stylistic.
 
-This is a complete, deployable Phase 1 build: every page renders, the
-appointment request and contact forms submit end to end, and the site passes
-`next build` and `eslint` clean. What it does **not** yet have:
+## The one thing to understand
 
-- **Real business details.** Address, phone number, email, opening hours,
-  prices, team members and patient reviews are all placeholders. Every one of
-  them is wrapped in square brackets and marked `TBC` — run
-  `grep -rn "TBC" src/` to list them. A banner sits above the header on every
-  page until they are filled in; delete
-  `src/components/PlaceholderBanner.tsx` and its use in
-  `src/app/layout.tsx` once they are.
-- **Persistence.** Enquiries are validated, logged to the server, and emailed
-  to the practice if `RESEND_API_KEY` and `ENQUIRY_NOTIFY_EMAIL` are set.
-  There is no database, by design — see the patient-data note in
-  [SETUP.md](./SETUP.md) before adding one.
-- **Real photography and branding.** The wordmark
-  (`src/components/Logo.tsx`) and favicon (`src/app/icon.tsx`) are drawn in
-  code rather than shipped as image files, so there is no placeholder binary
-  to mistake for a real asset.
-- **A map.** The contact page has an honest "map to be added" placeholder
-  rather than an embedded map pointing at an invented address.
+**Copy is data; there is one renderer.**
+
+- `src/lib/content/*.ts` — one module per page. Slug, meta, H1, keywords, and
+  a typed array of sections.
+- `src/components/sections/*` — one component per section type.
+- `src/components/PageRenderer.tsx` maps between them.
+- `src/app/[...slug]/page.tsx` is the only route file for all 22 pages.
+
+So a change to how a section looks lands on every page at once, no page can
+drift out of the 13-section structure, and the copy stays in a shape someone
+can edit without touching React.
+
+The section types are the 13-section landing page structure from
+`content-brief.md` §2, plus the extras the brief gives specific pages
+(`risk` on the aesthetics pages, `urgent` on extractions).
+
+## Guards — run these before you push
+
+```bash
+npm run check          # nap + compliance + lint
+npm run prelaunch      # the above, plus the outstanding-placeholder list
+```
+
+| Script | What it fails on |
+|---|---|
+| `check:nap` | Any retired NAP variant: a phone grouping other than `01892 547286` / `01892547286`, a `tel:` containing a space, `Mount Pleasant Ave`, the locality without "Royal", the Yahoo address, `iSmile Dental & Skin Clinic` as the entity name, the Dentistify line. |
+| `check:compliance` | Any botulinum toxin brand name anywhere in source — including alt text, form values and schema fields. Plus superlatives, "painless", "specialist", guarantee claims, "free consultation", finance claims, the comparative mercury claim, and `AggregateRating` schema. |
+| `check:placeholders` | Lists every unresolved `[PLACEHOLDER]` / `[BUILD]` marker with its file and line. A pre-launch gate, not a build gate. |
+
+Comments are stripped before matching, so a comment explaining *why* a claim
+was dropped doesn't trip the guard it documents. A reviewed exemption is an
+`allow-<rule id>` comment on the same line — there is currently exactly one,
+on the deliberately retained `/botox-tunbridge-wells/` URL.
+
+These guards cover source only. They cannot see the Google Business Profile,
+social captions or directory listings, where `compliance.md` §1 expects the
+same MHRA breach to be live. That audit is separate and still outstanding.
+
+## Placeholders
+
+Every unverified fact renders as a visible amber `[PLACEHOLDER: …]` marker.
+**Do not fill one with a plausible guess.** A wrong price or an invented
+opening time is worse than a visible gap, and several of these are ASA
+exposure. `build-plan.md` §3 is the client-facing list of what's needed.
+
+## URLs and the migration
+
+- `trailingSlash: true` — every old URL carries one, and the whole point of
+  retaining them is matching exactly.
+- The five merges from `research.md` §3 are 301s in `next.config.ts`.
+- **Status codes:** Next emits **308**, not 301, and ignores an explicit
+  `statusCode: 301` under `trailingSlash`. 308 is a permanent redirect that
+  also preserves the request method, and Google treats the two identically
+  for consolidating ranking signals. Each indexed old URL reaches its
+  destination in one hop, which is what actually matters. Flagged here
+  because `build-plan.md` §5 asks for "301 redirects live and tested".
+
+## Schema
+
+Emitted per page from `src/lib/schema.tsx`: `Dentist`, `Organization`,
+`WebSite`, `Person` (Dr Azimi, GDC number as `identifier`), `BreadcrumbList`,
+plus `MedicalProcedure` on treatment pages and `FAQPage` on every FAQ block.
+
+Deliberately **not** emitted:
+- `AggregateRating` / `Review` — until real verified reviews are wired in.
+- `openingHoursSpecification` — the hours have never been published. Inventing
+  them would poison the Google Business Profile as well as the site.
+- `sameAs` — two competing `g.page` profiles are in circulation and no social
+  profiles were found. Pointing `sameAs` at the wrong profile actively harms
+  the entity.
+
+## Environment variables
+
+None are required to build or run.
+
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata, sitemap and schema. Defaults to `https://ismiledentalpractice.co.uk`. |
+| `RESEND_API_KEY` | Turns on enquiry notification emails. |
+| `ENQUIRY_NOTIFY_EMAIL` | The practice's business-domain inbox. Not the Yahoo address. |
+
+## Patient data
+
+The enquiry form is the native replacement for the JotForm iframe, which sent
+health-related enquiry data to a free Yahoo consumer inbox. It captures
+explicit consent and tells patients not to send clinical detail.
+
+There is deliberately **no database**. Before adding one — or a CRM, an
+analytics tool or a chat widget — decide where that data lives, who can read
+it, and how long it is kept. A privacy notice page is still outstanding and
+is a launch blocker.
+
+## Build status
+
+| | |
+|---|---|
+| Built | Home |
+| Next | About Us, Meet the Team, Contact, the three hubs, Dental Implants |
+| Then | The 13 remaining treatment pages, in `build-plan.md` §1 commercial order |
+| Then | Blog migration (4 posts, unchanged) |
+| Not started | The nine location pages — **their copy has not been written yet** (`build-plan.md` §4). `locationPagesBuilt` in `src/lib/locations.ts` renders them as plain text until they exist, rather than linking to 404s. |
+| Not written | Fees & Membership, Nervous Patients, New Patients, Complaints Procedure — recommended in `build-plan.md` §4. The complaints page is a GDC Standards requirement. |
 
 ## Development
 
 ```bash
 npm install
 npm run dev
+npm run build && npm run start
 ```
-
-## Build
-
-```bash
-npm run build
-npm run start
-```
-
-## Deployment and account setup
-
-See [SETUP.md](./SETUP.md) — it covers creating the GitHub and Vercel
-accounts, connecting Claude Code to the repo, and the environment variables.
-
-## Project structure
-
-- `src/lib/site-data.ts` — **all** business content in one place: practice
-  details, navigation, treatments, prices, team, reviews and FAQs. Almost
-  every content change starts and ends here.
-- `src/app/*` — one directory per route:
-  - `/` home, `/new-patients`, `/treatments`, `/treatments/[slug]`,
-    `/emergency-dentist`, `/prices`, `/about`, `/faqs`, `/contact`, `/book`
-  - `sitemap.ts`, `robots.ts`, `icon.tsx` — generated metadata
-  - `api/enquiry/route.ts` — appointment request and contact form handler
-- `src/components/*` — shared UI. `Header`, `Footer`, `MobileCTA` and
-  `PlaceholderBanner` make up the site chrome in `src/app/layout.tsx`.
-
-## Conventions worth knowing
-
-- **Colour.** Two palettes are defined in `src/app/globals.css`: `brand`
-  (deep petrol teal, for structure and text) and `coral` (calls to action).
-  `coral-600` is the lightest coral that clears 4.5:1 against white text, so
-  CTA buttons stay at `coral-600` or darker and **darken** on hover.
-- **Placeholders are visible on purpose.** Nothing is invented to look
-  finished — no made-up phone number, no fabricated patient testimonials, no
-  guessed NHS band charges (they change every April). A visible `[… TBC]` is
-  easier to catch before launch than a plausible wrong number.
-- **Regulatory content.** The footer carries the GDC and CQC statements and
-  the complaints note that a UK dental practice site is expected to display.
-  `JsonLd.tsx` deliberately omits `Review`/`AggregateRating` markup until
-  there are real reviews to put in it.

@@ -1,12 +1,17 @@
 {
-  "name": "ismile-dental",
+  "name": "ismile-dental-practice",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:nap": "node scripts/check-nap.mjs",
+    "check:compliance": "node scripts/check-compliance.mjs",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
+    "check": "npm run check:nap && npm run check:compliance && npm run lint",
+    "prelaunch": "npm run check && npm run check:placeholders"
   },
   "dependencies": {
     "lucide-react": "^1.30.0",

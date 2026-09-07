@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #06282d;
+  --foreground: #0c3236;
 }
 
 @theme inline {
@@ -11,25 +11,31 @@
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 
-  /* Brand: deep petrol teal (clinical, calm) for structure and text. */
-  --color-brand-950: #04191c;
-  --color-brand-900: #06282d;
-  --color-brand-800: #0a3a41;
-  --color-brand-700: #0f4f58;
-  --color-brand-600: #146872;
-  --color-brand-500: #1c8792;
-  --color-brand-400: #35a8b2;
-  --color-brand-200: #a9dde2;
-  --color-brand-100: #d7eff1;
-  --color-brand-50: #f1f9fa;
+  /* Brand: deep petrol teal. Structure, headings, body text.
+     ink-600 clears 5:1 on white; ink-700 clears 7:1. Body copy uses 700. */
+  --color-ink-950: #071f22;
+  --color-ink-900: #0c3236;
+  --color-ink-800: #114449;
+  --color-ink-700: #175a60;
+  --color-ink-600: #1f757c;
+  --color-ink-500: #2a939b;
+  --color-ink-400: #4fb3ba;
+  --color-ink-200: #a9dbde;
+  --color-ink-100: #d8eef0;
+  --color-ink-50: #f2f9fa;
 
-  /* Accent: warm coral for calls to action. coral-600 is the lightest shade
-     that still clears 4.5:1 against white text — keep CTAs at 600 or darker
-     and darken (not lighten) on hover. */
-  --color-coral-700: #a53a32;
-  --color-coral-600: #c2453c;
-  --color-coral-500: #e0574c;
-  --color-coral-100: #fde8e5;
+  /* Accent: warm clay, for calls to action only.
+     clay-600 is the lightest that clears 4.5:1 against white text, so CTAs
+     sit at 600 or darker and DARKEN on hover rather than lightening. */
+  --color-clay-700: #97452b;
+  --color-clay-600: #b3532f;
+  --color-clay-500: #cc6438;
+  --color-clay-100: #fbeae0;
+
+  /* Warm neutrals, to keep the site from reading clinical-cold. */
+  --color-sand-50: #faf7f3;
+  --color-sand-100: #f2ece4;
+  --color-sand-200: #e5dbcd;
 }
 
 body {
@@ -39,7 +45,7 @@ body {
 }
 
 .container-page {
-  max-width: 80rem;
+  max-width: 78rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.25rem;
@@ -51,4 +57,13 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+/* Long-form body copy inside content sections. */
+.prose-body p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+.prose-body p:last-child {
+  margin-bottom: 0;
 }
