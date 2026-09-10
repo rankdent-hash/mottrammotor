@@ -62,7 +62,29 @@ export const unconfirmed = {
   cqcNumber: "CQC provider registration number for display",
 } as const;
 
-export type NavChild = { label: string; href: string };
+import {
+  Stethoscope,
+  SearchCheck,
+  BrushCleaning,
+  Droplet,
+  Droplets,
+  Crown,
+  Link as LinkIcon,
+  Rows3,
+  Zap,
+  Scissors,
+  Smile,
+  Layers,
+  WandSparkles,
+  Sun,
+  CircleDashed,
+  Anchor,
+  ScanFace,
+  Syringe,
+  type LucideIcon,
+} from "lucide-react";
+
+export type NavChild = { label: string; href: string; icon: LucideIcon };
 export type NavItem = {
   label: string;
   href: string;
@@ -80,40 +102,50 @@ export const primaryNav: NavItem[] = [
       {
         heading: "General Dentistry",
         items: [
-          { label: "General dentistry", href: "/general-dentistry/" },
-          { label: "Dental check-ups", href: "/dental-check-ups/" },
-          { label: "Dental hygiene", href: "/dental-hygiene/" },
-          { label: "White fillings", href: "/white-fillings/" },
-          { label: "Crowns", href: "/crown/" },
-          { label: "Bridges", href: "/bridges/" },
-          { label: "Dentures", href: "/dentures/" },
+          { label: "General dentistry", href: "/general-dentistry/", icon: Stethoscope },
+          { label: "Dental check-ups", href: "/dental-check-ups/", icon: SearchCheck },
+          { label: "Dental hygiene", href: "/dental-hygiene/", icon: BrushCleaning },
+          { label: "White fillings", href: "/white-fillings/", icon: Droplet },
+          { label: "Crowns", href: "/crown/", icon: Crown },
+          { label: "Bridges", href: "/bridges/", icon: LinkIcon },
+          { label: "Dentures", href: "/dentures/", icon: Rows3 },
           {
             label: "Root canal treatment",
             href: "/root-canal-treatment-in-tunbridge-wells/",
+            icon: Zap,
           },
-          { label: "Extractions & oral surgery", href: "/oral-surgery/" },
+          // A tooth being removed, not a treatment being given — Scissors
+          // reads as surgical, unlike a generic medical icon.
+          { label: "Extractions & oral surgery", href: "/oral-surgery/", icon: Scissors },
         ],
       },
       {
         heading: "Cosmetic Dentistry",
         items: [
-          { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
-          { label: "Dental veneers", href: "/dental-veneers/" },
-          { label: "Composite bonding", href: "/composite-bonding/" },
+          { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/", icon: Smile },
+          { label: "Dental veneers", href: "/dental-veneers/", icon: Layers },
+          { label: "Composite bonding", href: "/composite-bonding/", icon: WandSparkles },
           {
             label: "Teeth whitening",
             href: "/teeth-whitening-tunbridge-wells/",
+            icon: Sun,
           },
-          { label: "Invisalign", href: "/invisalign/" },
+          { label: "Invisalign", href: "/invisalign/", icon: CircleDashed },
         ],
       },
       {
         heading: "Implants & Skin Clinic",
         items: [
-          { label: "Dental implants", href: "/dental-implants/" },
-          { label: "Skin clinic", href: "/facial-rejuvenation/" },
-          { label: "Anti-wrinkle treatments", href: "/botox-tunbridge-wells/" }, // allow-pom-brand-name: URL retained for equity, all copy rewritten (compliance.md §1)
-          { label: "Dermal fillers", href: "/dermal-fillers/" },
+          // Anchored into the jaw, per the copy itself — Anchor is a literal
+          // fit, not a generic medical placeholder.
+          { label: "Dental implants", href: "/dental-implants/", icon: Anchor },
+          { label: "Skin clinic", href: "/facial-rejuvenation/", icon: ScanFace },
+          {
+            label: "Anti-wrinkle treatments",
+            href: "/botox-tunbridge-wells/", // allow-pom-brand-name: URL retained for equity, all copy rewritten (compliance.md §1)
+            icon: Syringe,
+          },
+          { label: "Dermal fillers", href: "/dermal-fillers/", icon: Droplets },
         ],
       },
     ],

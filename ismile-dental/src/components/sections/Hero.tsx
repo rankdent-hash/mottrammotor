@@ -1,3 +1,4 @@
+import { MapPin } from "lucide-react";
 import Prose from "@/components/Prose";
 import EnquiryForm from "@/components/EnquiryForm";
 import { practice } from "@/lib/practice";
@@ -33,15 +34,27 @@ export default function Hero({
             ))}
           </div>
 
-          <a
-            href={practice.phoneHref}
-            className="mt-6 inline-flex items-center justify-center rounded-md border border-ink-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-ink-800 lg:hidden"
-          >
-            Call {practice.phone}
-          </a>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href={practice.phoneHref}
+              className="inline-flex items-center justify-center rounded-md border border-ink-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-ink-800 lg:hidden"
+            >
+              Call {practice.phone}
+            </a>
+            {section.locationAnchor && (
+              <a
+                href={section.locationAnchor}
+                aria-label="Jump to map and address"
+                title="Jump to map and address"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-600 text-white transition-colors hover:bg-ink-800"
+              >
+                <MapPin className="h-5 w-5" aria-hidden="true" />
+              </a>
+            )}
+          </div>
         </div>
 
-        <div className="text-ink-900">
+        <div id="enquiry-form" className="scroll-mt-20 text-ink-900 lg:scroll-mt-32">
           <EnquiryForm
             heading={section.formHeading}
             options={section.formOptions}

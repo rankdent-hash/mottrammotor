@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Hero from "@/components/sections/Hero";
 import TrustStrip from "@/components/sections/TrustStrip";
+import QuickLinks from "@/components/sections/QuickLinks";
 import ProseBlock from "@/components/sections/ProseBlock";
 import WhyChoose from "@/components/sections/WhyChoose";
 import Reviews from "@/components/sections/Reviews";
@@ -35,6 +36,8 @@ export default function PageRenderer({ page }: { page: PageContent }) {
             return <Hero key={i} section={section} source={page.slug} />;
           case "trustStrip":
             return <TrustStrip key={i} section={section} />;
+          case "quickLinks":
+            return <QuickLinks key={i} section={section} />;
           case "recognise":
           case "outcome":
             return <ProseBlock key={i} section={section} />;

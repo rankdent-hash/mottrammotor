@@ -8,7 +8,7 @@ import type { ExplainerSection } from "@/lib/content/types";
  */
 export default function Explainer({ section }: { section: ExplainerSection }) {
   return (
-    <SectionShell h2={section.h2}>
+    <SectionShell h2={section.h2} id={section.id}>
       <Blocks blocks={section.blocks} />
     </SectionShell>
   );

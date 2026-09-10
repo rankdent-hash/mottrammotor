@@ -66,8 +66,12 @@ export default function Header() {
                             <li key={child.href}>
                               <Link
                                 href={child.href}
-                                className="block rounded px-2 py-1 text-sm text-ink-800 hover:bg-ink-50 hover:text-clay-700"
+                                className="flex items-center gap-2 rounded px-2 py-1 text-sm text-ink-800 hover:bg-ink-50 hover:text-clay-700"
                               >
+                                <child.icon
+                                  className="h-4 w-4 shrink-0 text-ink-500"
+                                  aria-hidden="true"
+                                />
                                 {child.label}
                               </Link>
                             </li>
@@ -139,8 +143,9 @@ export default function Header() {
                         key={child.href}
                         href={child.href}
                         onClick={() => setOpen(false)}
-                        className="block py-1.5 text-sm text-ink-100"
+                        className="flex items-center gap-2 py-1.5 text-sm text-ink-100"
                       >
+                        <child.icon className="h-4 w-4 shrink-0 text-ink-400" aria-hidden="true" />
                         {child.label}
                       </Link>
                     ))}

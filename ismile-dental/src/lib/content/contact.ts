@@ -1,3 +1,5 @@
+import { Phone, MapPin, Route, Mail } from "lucide-react";
+import { practice } from "@/lib/practice";
 import type { PageContent } from "@/lib/content/types";
 
 // Copy transcribed verbatim from copy/01-core-pages.md, Page 4.
@@ -65,6 +67,17 @@ export const contact: PageContent = {
         },
         "If you're in pain, please ring rather than using the form.",
       ],
+      locationAnchor: "#location",
+    },
+
+    {
+      type: "quickLinks",
+      items: [
+        { label: "Call now", href: practice.phoneHref, icon: Phone },
+        { label: "Address & map", href: "#location", icon: MapPin },
+        { label: "Getting here", href: "#getting-here", icon: Route },
+        { label: "Send a message", href: "#enquiry-form", icon: Mail },
+      ],
     },
 
     {
@@ -81,6 +94,7 @@ export const contact: PageContent = {
     {
       type: "explainer",
       h2: "Where is iSmile Dental Practice?",
+      id: "location",
       blocks: [
         {
           kind: "definition",
@@ -88,17 +102,7 @@ export const contact: PageContent = {
         },
 
         { kind: "h3", text: "Address" },
-        {
-          kind: "list",
-          items: [
-            ["iSmile Dental Practice"],
-            ["1 The Lodge"],
-            ["Mount Pleasant Avenue"],
-            ["Royal Tunbridge Wells"],
-            ["Kent"],
-            ["TN1 1QY"],
-          ],
-        },
+        { kind: "address" },
 
         { kind: "h3", text: "Phone" },
         { kind: "p", text: ["**01892 547286**"] },
@@ -141,15 +145,7 @@ export const contact: PageContent = {
         },
 
         { kind: "h3", text: "Map" },
-        {
-          kind: "note",
-          text: [
-            {
-              placeholder:
-                "[BUILD: embedded Google Map centred on TN1 1QY, lazy-loaded so it doesn't slow the page, with a “Get directions” button opening the route in the user's own maps app. Set the pin from the verified Google Business Profile so the embed, the profile and the site all agree.]",
-            },
-          ],
-        },
+        { kind: "map" },
         {
           kind: "note",
           text: [
@@ -165,6 +161,7 @@ export const contact: PageContent = {
     {
       type: "explainer",
       h2: "How do I get to the practice?",
+      id: "getting-here",
       blocks: [
         {
           kind: "p",

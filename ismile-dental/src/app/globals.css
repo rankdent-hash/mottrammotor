@@ -38,6 +38,10 @@
   --color-sand-200: #e5dbcd;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

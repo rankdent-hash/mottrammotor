@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Navigation } from "lucide-react";
 import Prose from "@/components/Prose";
 import Placeholder from "@/components/Placeholder";
+import { practice } from "@/lib/practice";
 import {
   isPlaceholder,
   type ExplainerBlock,
@@ -75,8 +77,61 @@ export function Blocks({ blocks }: { blocks: ExplainerBlock[] }) {
                 </Link>
               </p>
             );
+          case "address":
+            return (
+              <address
+                key={i}
+                className="not-italic rounded-lg bg-ink-50 p-4 text-base leading-relaxed text-ink-900"
+              >
+                <span className="font-semibold">{practice.name}</span>
+                <br />
+                {practice.address.building}
+                <br />
+                {practice.address.street}
+                <br />
+                {practice.address.locality}
+                <br />
+                {practice.address.region} {practice.address.postcode}
+              </address>
+            );
+          case "map":
+            return <MapEmbed key={i} />;
         }
       })}
+    </div>
+  );
+}
+
+/**
+ * A no-API-key Google Maps embed, centred on the practice's own address —
+ * the same string as everywhere else on the site, so the pin can never
+ * silently drift from the Google Business Profile. "Get directions" opens
+ * the user's own maps app/tab rather than navigating them away from the
+ * site they're already reading.
+ */
+function MapEmbed() {
+  const query = encodeURIComponent(practice.addressLine);
+  return (
+    <div className="overflow-hidden rounded-xl border border-ink-100">
+      <iframe
+        title={`Map showing ${practice.name}`}
+        src={`https://www.google.com/maps?q=${query}&output=embed`}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="h-80 w-full sm:h-96"
+      />
+      <div className="flex items-center justify-between gap-3 bg-white p-4">
+        <p className="text-sm text-ink-700">{practice.addressLine}</p>
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${query}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-clay-600 px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-clay-700"
+        >
+          <Navigation className="h-4 w-4" aria-hidden="true" />
+          Get directions
+        </a>
+      </div>
     </div>
   );
 }
@@ -139,7 +194,7 @@ export function SectionShell({
           : "";
 
   return (
-    <section id={id} className={bg}>
+    <section id={id} className={`scroll-mt-20 lg:scroll-mt-32 ${bg}`}>
       <div className="container-page py-14 sm:py-18">
         {h2 && (
           <h2

@@ -11,6 +11,8 @@
 // at the bottom of this union where the brief gives them one.
 // ---------------------------------------------------------------------------
 
+import type { LucideIcon } from "lucide-react";
+
 /** A marked gap. Renders visibly; never fill one with a plausible guess. */
 export type Placeholder = { placeholder: string };
 
@@ -48,6 +50,13 @@ export type HeroSection = {
    */
   extraFields?: ("email" | "message")[];
   underForm: Prose;
+  /**
+   * An in-page anchor (e.g. "#location") for a small map-pin button rendered
+   * beside the hero copy — a one-tap jump straight to the map/address section
+   * for anyone who opened the page only to find directions. Omit on pages
+   * that have no such section to jump to.
+   */
+  locationAnchor?: string;
 };
 
 // --- Section 2 -------------------------------------------------------------
@@ -55,6 +64,17 @@ export type HeroSection = {
 export type TrustStripSection = {
   type: "trustStrip";
   items: (string | Placeholder)[];
+};
+
+/**
+ * A ribbon of jump links, typically placed straight after the hero so a
+ * visitor can get to "call", "directions" or "opening hours" in one tap
+ * without reading the page. Each href is an in-page anchor or a direct
+ * action link (tel:) — never an external link, so it never needs a new tab.
+ */
+export type QuickLinksSection = {
+  type: "quickLinks";
+  items: { label: string; href: string; icon: LucideIcon }[];
 };
 
 // --- Sections 3 & 4 --------------------------------------------------------
@@ -105,12 +125,22 @@ export type ExplainerBlock =
   | { kind: "list"; items: Prose[] }
   | { kind: "table"; table: Table }
   | { kind: "link"; link: Link }
-  | { kind: "note"; text: Prose };
+  | { kind: "note"; text: Prose }
+  /**
+   * The practice's postal address, pulled from `practice.ts` rather than
+   * typed out here — a `list` block renders one bullet per line, which reads
+   * like a set of unrelated facts rather than a single address.
+   */
+  | { kind: "address" }
+  /** Embedded map + "Get directions" link, both derived from `practice.ts`. */
+  | { kind: "map" };
 
 export type ExplainerSection = {
   type: "explainer";
   h2: string;
   blocks: ExplainerBlock[];
+  /** Anchor id for in-page jump links (a quick-links ribbon, a hero button). */
+  id?: string;
 };
 
 // --- Section 8 -------------------------------------------------------------
@@ -216,6 +246,7 @@ export type UrgentSection = {
 export type Section =
   | HeroSection
   | TrustStripSection
+  | QuickLinksSection
   | ProseSection
   | WhyChooseSection
   | ReviewsSection
