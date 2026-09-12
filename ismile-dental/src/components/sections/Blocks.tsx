@@ -78,20 +78,15 @@ export function Blocks({ blocks }: { blocks: ExplainerBlock[] }) {
               </p>
             );
           case "address":
+            // One flowing, comma-separated line rather than one line per
+            // field — it wraps naturally (two lines at this column width)
+            // instead of reading as a bulleted list of unrelated facts.
             return (
               <address
                 key={i}
                 className="not-italic rounded-lg bg-ink-50 p-4 text-base leading-relaxed text-ink-900"
               >
-                <span className="font-semibold">{practice.name}</span>
-                <br />
-                {practice.address.building}
-                <br />
-                {practice.address.street}
-                <br />
-                {practice.address.locality}
-                <br />
-                {practice.address.region} {practice.address.postcode}
+                {practice.addressLine}
               </address>
             );
           case "map":
